@@ -11,7 +11,7 @@ env:
   AWS_REGION: 'us-east-1'
 
 jobs:
-  #  JOB 1 : INTÉGRATION CONTINUE AVEC SÉCURITÉ hh
+  #  JOB 1 : INTÉGRATION CONTINUE AVEC SÉCURITÉ hhh
   continuous-integration:
     name: "🔍 CI - Tests & Sécurité"
     runs-on: ubuntu-latest
