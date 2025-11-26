@@ -94,7 +94,7 @@ jobs:
         tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
         load: true
         cache-from: type=gha
-        cache-to: type=gha,mode=max
+    # Supprimer cache-to ou utiliser une configuration différente
         
     - name: " Scan de sécurité de l'image avec Trivy"
       uses: aquasecurity/trivy-action@master
