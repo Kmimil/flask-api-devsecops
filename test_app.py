@@ -1,27 +1,32 @@
-from app import app
 import pytest
-def test_home_route():
-    """Test de la route principale"""
-    client = app.test_client()
+from app import app
+
+
+@pytest.fixture
+def client():
+    with app.test_client() as client:
+        yield client
+
+
+def test_home_endpoint(client):
     response = client.get('/')
     assert response.status_code == 200
-    data = response.get_json()
-    assert 'message' in data
-    assert 'version' in data
+    assert b"API Flask DevSecOps" in response.data
 
-def test_health_route():
-    """Test de la route health"""
-    client = app.test_client()
+
+def test_health_endpoint(client):
     response = client.get('/health')
     assert response.status_code == 200
-    data = response.get_json()
-    assert data['status'] == 'healthy'
+    assert b"healthy" in response.data
 
-def test_info_route():
-    """Test de la route info"""
-    client = app.test_client()
-    response = client.get('/info')
+
+def test_get_data_endpoint(client):
+    response = client.get('/api/data')
     assert response.status_code == 200
-    data = response.get_json()
-    assert 'institution' in data
-    assert 'ENSAJ' in data['institution']
+    assert b"data" in response.data
+
+
+def test_post_data_endpoint(client):
+    response = client.post('/api/data', json={"test": "data"})
+    assert response.status_code == 201
+    assert b"received" in response.data
